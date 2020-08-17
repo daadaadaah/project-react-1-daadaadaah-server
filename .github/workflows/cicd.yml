@@ -20,16 +20,7 @@ jobs:
         run: npm ci
       - name: Load FIREBASE Config
         run: |
-        echo '{}' | jq --arg type '${{ secrets.FIREBASE_TYPE }}' \
-        --arg project_id '${{ secrets.FIREBASE_PROJECT_ID }}' \
-        --arg private_key_id '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}' \
-        --arg private_key '${{ secrets.FIREBASE_PRIVATE_KEY }}' \
-        --arg client_email '${{ secrets.FIREBASE_CLIENT_EMAIL }}' \
-        --arg client_id '${{ secrets.FIREBASE_CLIENT_ID }}' \
-        --arg auth_uri '${{ secrets.FIREBASE_AUTH_URI }}' \
-        --arg token_uri '${{ secrets.FIREBASE_TOKEN_URI }}' \
-        --arg auth_provider_x509_cert_url '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}' \
-        --arg client_x509_cert_url '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}' \
+        echo '{}' | jq --arg type '${{ secrets.FIREBASE_TYPE }}' --arg project_id '${{ secrets.FIREBASE_PROJECT_ID }}' --arg private_key_id '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}' --arg private_key '${{ secrets.FIREBASE_PRIVATE_KEY }}' --arg client_email '${{ secrets.FIREBASE_CLIENT_EMAIL }}' --arg client_id '${{ secrets.FIREBASE_CLIENT_ID }}' --arg auth_uri '${{ secrets.FIREBASE_AUTH_URI }}' --arg token_uri '${{ secrets.FIREBASE_TOKEN_URI }}' --arg auth_provider_x509_cert_url '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}' --arg client_x509_cert_url '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}' \
         '{ 
           type: $type, 
           project_id: $project_id,
