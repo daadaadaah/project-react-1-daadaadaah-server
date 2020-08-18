@@ -30,6 +30,10 @@ app.get('/hello-world', (req, res) => {
   return res.status(200).send('Hello World!! /'+serviceAccount.project_id+"/");
 })
 
+app.get('/goodbye-world', (req, res) => {
+  return res.status(200).send('goodbye World!! /'+serviceAccount.project_id+"/");
+})
+
 app.post('/user', (req, res) => {
 
   (async () => {
