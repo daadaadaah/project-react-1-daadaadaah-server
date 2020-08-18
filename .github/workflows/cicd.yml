@@ -29,4 +29,6 @@ jobs:
       - name: Deploy
         if: github.ref == 'refs/heads/master'
         working-directory: functions
-        run: npm run deploy
+        run: | 
+          firebase login --no-localhost
+          npm run deploy
