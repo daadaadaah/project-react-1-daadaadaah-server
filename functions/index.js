@@ -27,7 +27,7 @@ app.use( cors( { origin: true }));
 
 // Routes
 app.get('/hello-world', (req, res) => {
-  return res.status(200).send('Hello World! - /'+serviceAccount.project_id+"/");
+  return res.status(200).send('Hello World!! /'+serviceAccount.project_id+"/");
 })
 
 app.post('/user', (req, res) => {
