@@ -16,12 +16,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
+      - name: Install firebase-tools and dependencies
         working-directory: functions
         run: |
           npm install -g firebase-tools
           npm install
-      - name: Load FIREBASE Config
+      - name: Create Firebase Config JSON file
         working-directory: functions
         run: |
             echo '{}' | jq --arg type '${{ secrets.FIREBASE_TYPE }}' \
@@ -46,7 +46,7 @@ jobs:
                 auth_provider_x509_cert_url: $auth_provider_x509_cert_url, 
                 client_x509_cert_url: $client_x509_cert_url 
             }' > devConfig.json
-      - name: Deploy
+      - name: Deploy Firebase functions
         if: github.ref == 'refs/heads/master'        
         uses: w9jds/firebase-action@master
         with:
