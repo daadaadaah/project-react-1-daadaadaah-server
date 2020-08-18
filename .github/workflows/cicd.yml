@@ -30,5 +30,4 @@ jobs:
         if: github.ref == 'refs/heads/master'
         working-directory: functions
         run: | 
-          firebase login:ci --interactive
-          npm run deploy
+          firebase deploy --only functions --token '${{ secrets.FIREBASE_TOKEN }}'
