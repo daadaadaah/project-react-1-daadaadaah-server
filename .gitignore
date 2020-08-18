@@ -67,4 +67,4 @@ node_modules/
 
 
 # firebase secret .json file
-functions/config/dev*.json
+functions/devConfig.json
