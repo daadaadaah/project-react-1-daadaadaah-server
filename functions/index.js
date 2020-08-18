@@ -4,8 +4,11 @@ const admin = require('firebase-admin');
 var serviceAccount = require("./devConfig.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+  credential: admin.credential.cert(...serviceAccount,
+    {
+      private_key: serviceAccount.private_key.replace(/\\n/g, '\n')
+    }   
+)});
 
 const express = require('express');
 const app = express();
