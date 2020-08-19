@@ -23,37 +23,62 @@ const app = express();
 const db = admin.firestore();
 
 const cors = require('cors');
+const { user } = require('firebase-functions/lib/providers/auth');
 app.use( cors( { origin: true }));
 
 // Routes
+// Hello-world
 app.get('/hello-world', (req, res) => {
   return res.status(200).send('Hello World!! /'+serviceAccount.project_id+"/");
 })
 
-app.get('/goodbye-world', (req, res) => {
-  return res.status(200).send('goodbye World!! /'+serviceAccount.project_id+"/");
-})
+// User
+app.post("/login", async (request, response) =>  {
 
-app.post('/user', (req, res) => {
+  const user = {
+    uid: request.body.uid,
+    email: request.body.email,
+    photoURL: request.body.photoURL
+  };
 
-  (async () => {
-    try {
-      await db.collection('user').doc('/'+req.body.uid+'/')
-      .create({
-          uid: req.body.uid,
-          email: req.body.email,
-          photoURL: req.body.photoURL
-      })
-      return res.status(200).send();
+  const isDoc = await db.collection('user').doc(`/${user.uid}/`).get();
 
-    } catch(error) {
-      console.log(error);
-      return res.status(500).send(error);
-    }
+  if(isDoc.exists) { // 이미 가입된 회원이 로그인 한 경우
+    
+    return response.status(201).json({ 
+      message: "login successfully",
+      body : {
+        uid: user.uid,
+        email: user.email,
+        photoURL: user.photoURL,
+      }
+    });
+  }
 
-  })();
+  const newUser = {
+    uid: user.uid,
+    email: user.email,
+    photoURL: user.photoURL,
+    createdAt: new Date().toISOString()
+  };
 
-})
+  try {
+    
+    const signup = await db.collection('user').doc(`/${user.uid}/`).set(newUser);
 
-// Export the API to Firebase Cloud Functions
+    return response.status(201).json({ 
+      message: "signup successfully",
+      body : {
+        uid: user.uid,
+        email: user.email,
+        photoURL: user.photoURL,
+      }
+    });
+
+  } catch (error) { // TODO : 에러 헨들링 더 공부 후 수정하기
+      console.error(error);
+      return response.status(500).send(error);  
+  }
+});
+
 exports.api = functions.https.onRequest(app);
